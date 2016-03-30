@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var crypto = require('crypto'); //加密密码用
-User = require('../models/user');
+// 加密密码用
+var crypto = require('crypto');
+var User = require('../models/user');
 
 /* GET home page. */
 module.exports = function (app) {
@@ -27,7 +28,7 @@ module.exports = function (app) {
         var name = req.body.name,
             password = req.body.password,
             password_re = req.body['password-repeat'];
-            //判断用户两次输入是否一致
+            // 判断用户两次输入是否一致
             if (password_re !== password) {
                 req.flash('error', '两次输入的密码不一致');
                 return res.redirect('/reg'); //返回用户注册页
@@ -64,7 +65,12 @@ module.exports = function (app) {
     });
 
     app.get('/login', function (req, res) {
-        res.render('login', {title: '登录'});
+        res.render('login', {
+            title: '登录',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
     });
 
     app.post('/login', function (req, res) {
@@ -74,11 +80,22 @@ module.exports = function (app) {
         // 检查用户是否存在
         User.get(req.body.name, function (err,user) {
             if (!user) {
-                req.flash('error','用户不存在!');
+                req.flash('error', '用户不存在!');
                 // 当用户不存在跳转到登录页
                 return res.redirect('/login');
             }
-        })
+            // 检查密码是否一致
+            if (user.password !== password) {
+                req.flash('error', '密码错误！');
+                // 密码错误跳转到登录页
+                return res.redirect('/login');
+            }
+            // 用户名密码都匹配后将用户信息存入session
+            req.session.user = user;
+            req.flash('success', '登录成功');
+            // 登录成功后跳转到主页
+            res.redirect('/');
+        });
     });
 
     app.get('/post', function (req, res) {
@@ -90,7 +107,10 @@ module.exports = function (app) {
     });
 
     app.get('/logout', function (req, res) {
-
+        req.session.user = null;
+        req.flash('success', '登出成功');
+        // 注销成功后跳转到主页
+        res.redirect('/');
     });
 
 };
