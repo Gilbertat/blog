@@ -36,7 +36,7 @@ User.prototype.save = function (callback) {
                 if (err) {
                     return callback(err);
                 }
-                callback(null, user[0]); //成功
+                callback(null, user[0]); // 成功
             });
         });
     });
@@ -61,9 +61,9 @@ User.get = function (name, callback) {
             }, function (err, user) {
                 mongodb.close();
                 if (err) {
-                    return callback(err); //失败
+                    return callback(err); // 失败
                 }
-                callback(null,user); //成功，返回用户信息
+                callback(null, user); // 成功，返回用户信息
             });
         });
     });
