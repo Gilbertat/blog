@@ -12,6 +12,9 @@ module.exports = function (app) {
             if (err) {
                 posts = [];
             }
+            else if (!req.session.user) {
+                posts = [];
+            }
             res.render('index', {
                 title: '主页',
                 user: req.session.user,

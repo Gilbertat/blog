@@ -41,7 +41,7 @@ app.use(session({
         db: settings.db,
         host: settings.host,
         port: settings.port,
-        url: 'mongodb:///Users/shiyue/Desktop/Web/blog/blog'
+        url: 'mongodb://localhost:27017'
     })
 }));
 
