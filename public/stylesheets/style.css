@@ -1,0 +1,64 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 2em auto;
+    padding: 0 2em;
+    width: 600px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+}
+
+p {
+    margin: 1em 0;
+    line-height: 24px;
+}
+
+header {
+    padding: .5em 0;
+    border-bottom: 1px solid #ccc;
+}
+
+nav {
+    float: left;
+    margin-left: -12em;
+    width: 9em;
+    text-align: right;
+    font: 1.1em Microsoft YaHei;
+    text-transform: uppercase;
+}
+
+nav a {
+    display: block;
+    padding: .7em 1em;
+    color: #000;
+    text-decoration: none;
+}
+
+nav a:hover {
+    -webkit-transition: color .2s linear;
+    background-color: #ff0000;
+    color: #f9f9f9;
+}
+
+article {
+    padding-top: .5em;
+    font-size: 16px;
+}
+
+article a {
+    color: #dd0000;
+    text-decoration: none;
+}
+
+article a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+.info {
+    font-size: 14px;
+}
