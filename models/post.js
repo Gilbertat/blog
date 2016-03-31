@@ -87,3 +87,33 @@ Post.get = function (name, callback) {
         });
     });
 };
+
+Post.getOne = function(name, day, title, callback) {
+    // 打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        // 读取文章集合
+        db.collection('posts', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+                // 根据用户名，发表日期及文章名进行查询
+                collection.findOne({
+                    "name": name,
+                    "title.day": day,
+                    "title": title
+                }, function (err, doc) {
+                    mongodb.close();
+                    if (err) {
+                        return callback(err);
+                    }
+                    // 解析MarkDown为html
+                    doc.post = markdown.toHTML(doc.post);
+                    callback(null, doc);
+                });
+        });
+    });
+};

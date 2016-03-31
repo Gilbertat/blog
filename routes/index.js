@@ -8,7 +8,7 @@ var Post = require('../models/post.js');
 /* GET home page. */
 module.exports = function (app) {
     app.get('/', function (req, res) {
-        Post.get(null, function (err, posts) {
+        Post.getAll(null, function (err, posts) {
             if (err) {
                 posts = [];
             }
