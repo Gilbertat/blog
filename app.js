@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var storage = require('./Tools/mutlerUtil');
+
 
 // database
 var settings = require('./setting');
@@ -17,6 +19,9 @@ var MongoStore = require('connect-mongo')(session);
 
 
 var app = express();
+
+var upload = storage.single('inputPic');
+app.use(upload);
 
 // view engine setup
 app.set('port', process.env.PORT || 3000);
@@ -31,6 +36,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+var cpUpload = storage.single('inputPic');
+app.use(cpUpload);
 
 
 app.use(session({
