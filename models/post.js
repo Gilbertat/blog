@@ -90,30 +90,28 @@ Post.getAll = function (name, callback) {
 
 Post.getOne = function(name, day, title, callback) {
     // 打开数据库
-    mongodb.open(function (err, db) {
-        if (err) {
-            return callback(err);
-        }
-        // 读取文章集合
+    mongodb.open(function (err, db){
+       if(err) {
+           return callback(err);
+       }
+        // 读取posts文档
         db.collection('posts', function (err, collection) {
-            if (err) {
+            if(err) {
                 mongodb.close();
                 return callback(err);
             }
-                // 根据用户名，发表日期及文章名进行查询
-                collection.findOne({
-                    "name": name,
-                    "title.day": day,
-                    "title": title
-                }, function (err, doc) {
+            collection.findOne({
+                "name": name,
+                "time.day": day,
+                "title": title
+            }, function (err, doc) {
+                if(err) {
                     mongodb.close();
-                    if (err) {
-                        return callback(err);
-                    }
-                    // 解析MarkDown为html
-                    doc.post = markdown.toHTML(doc.post);
-                    callback(null, doc);
-                });
+                    return callback(err);
+                }
+                doc.post = markdown.toHTML(doc.post);
+                callback(null, doc);
+            });
         });
     });
 };
