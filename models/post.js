@@ -90,7 +90,7 @@ Post.getAll = function (name, callback) {
 
 Post.getOne = function(name, day, title, callback) {
     // 打开数据库
-    mongodb.open(function (err, db){
+    mongodb.open(function (err, db) {
        if(err) {
            return callback(err);
        }
